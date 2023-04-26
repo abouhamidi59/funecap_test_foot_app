@@ -1,0 +1,19 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Home Team</th>
+        <th scope="col">Away Team</th>
+        <th scope="col">Details</th>
+    </tr>
+    </thead>
+    <tbody data-match-target="matchesContainer">
+    {% for match in matches %}
+        <tr>
+            <td>{{ match.teams.home.name }}</td>
+            <td>{{ match.teams.away.name }}</td>
+            <td><a href="#" data-action="click->match#showDetails" data-match-id="{{ match.fixture.id }}">Details</a></td>
+        </tr>
+        <tr data-match-target="matchDetailsContainer"></tr>
+    {% endfor %}
+    </tbody>
+</table>

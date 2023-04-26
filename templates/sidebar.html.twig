@@ -1,0 +1,9 @@
+<div class="list-group">
+    {% for league in leagues %}
+        <a href="#" class="list-group-item list-group-item-action"
+           data-action="match#loadMatches"
+           data-league-id="{{ league.league.id }}">
+                {{ league.league.name }}
+        </a>
+    {% endfor %}
+</div>

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="row" data-controller="match">
+        <div class="col-md-4">
+            {% include 'sidebar.html.twig' %}
+        </div>
+        <div class="col-md-8">
+            <div id="matches-container">
+                {% include 'matches.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
