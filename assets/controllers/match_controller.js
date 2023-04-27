@@ -14,10 +14,11 @@ export default class extends Controller {
             data.matches.forEach(match => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-            <td>${match.teams.home.name}</td>
-            <td>${match.teams.away.name}</td>
-            <td><a href="#" data-action="click->match#showDetails" data-match-id="${match.fixture.id}">Details</a></td>
-        `;
+                    <td><img src="${match.teams.home.logo}" alt="${match.teams.home.name}" class="logo" /></td>
+                    <td class="fs-5 fw-bold">${match.goals.home} <span class="fw-light">VS</span> ${match.goals.away}</td>
+                    <td><img src="${match.teams.away.logo}" alt="${match.teams.away.name}" class="logo" /></td>
+                    <td><a href="#" class="btn btn-primary" data-action="click->match#showDetails" data-match-id="${match.fixture.id}">Details</a></td>
+                `;
                 this.matchesContainerTarget.appendChild(tr);
             });
         } else {
@@ -26,36 +27,6 @@ export default class extends Controller {
         }
     }
 
-    /*async showDetails(event) {
-        event.preventDefault();
-        const matchId = event.currentTarget.dataset.matchId;
-        const response = await fetch(`/match/${matchId}`);
-
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data.match)
-            this.matchDetailsContainerTarget.innerHTML = `
-            <div class="card">
-                <div class="card-header">
-                    ${data.match.goals.home} VS ${data.match.goals.away}
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Match Details</h5>
-                    <p class="card-text">
-                        Date: ${data.match.fixture.date}<br>
-                        Venue: ${data.match.fixture.venue.name +' - '+ data.match.fixture.venue.city}<br>
-                        Referee: ${data.match.fixture.referee}<br>
-                    </p>
-                </div>
-            </div>
-        `;
-            this.matchDetailsContainerTarget.hidden = false;
-        } else {
-            const errorData = await response.json();
-            console.log( errorData.error);
-        }
-    }*/
-
     async showDetails(event) {
         event.preventDefault();
         const matchId = event.currentTarget.dataset.matchId;
@@ -63,16 +34,21 @@ export default class extends Controller {
 
         if (response.ok) {
             const data = await response.json();
-            console.log(data.match)
+            const formattedDate = new Date(data.match.fixture.date).toLocaleString('en-US', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
             this.matchDetailsContainerTarget.innerHTML = `
             <div class="card">
                 <div class="card-header">
-                    ${data.match.goals.home} VS ${data.match.goals.away}
+                     <h5 class="card-title">Match Details</h5>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Match Details</h5>
                     <p class="card-text">
-                        Date: ${data.match.fixture.date}<br>
+                        Date: ${formattedDate}<br>
                         Venue: ${data.match.fixture.venue.name +' - '+ data.match.fixture.venue.city}<br>
                         Referee: ${data.match.fixture.referee}<br>
                     </p>
@@ -102,7 +78,7 @@ export default class extends Controller {
                     `).join('')}
                 </div>
             </div>
-        `;
+            `;
             this.matchDetailsContainerTarget.hidden = false;
         } else {
             const errorData = await response.json();

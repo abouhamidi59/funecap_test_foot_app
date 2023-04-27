@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <div class="row" data-controller="match">
-        <div class="col-md-4">
-            {% include 'sidebar.html.twig' %}
+    <div class="container-fluid">
+        <div class="row bg-primary text-white mb-4 py-3">
+            <div class="col">
+                <h1>Foot Live</h1>
+            </div>
         </div>
-        <div class="col-md-8">
-            <div id="matches-container">
-                {% include 'matches.html.twig' %}
+        <div class="row" data-controller="match">
+            <div class="col-md-4">
+                {% include 'sidebar.html.twig' %}
+            </div>
+            <div class="col-md-8">
+                <div id="matches-container">
+                    {% include 'matches.html.twig' %}
+                </div>
             </div>
         </div>
     </div>

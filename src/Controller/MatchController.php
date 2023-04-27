@@ -7,6 +7,7 @@ use App\Service\ApiFootballService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class MatchController extends AbstractController
 {
@@ -18,6 +19,9 @@ class MatchController extends AbstractController
         $this->apiFootballService = $apiFootballService;
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Route('/', name: 'home', methods: ['GET'])]
     public function index(): Response
     {
@@ -32,6 +36,9 @@ class MatchController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Route('/matches/{leagueId}', name: 'matches_by_league', methods: ['GET'])]
     public function matchesByLeague(int $leagueId): JsonResponse
     {
@@ -43,6 +50,9 @@ class MatchController extends AbstractController
         }
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Route('/match/{id}', name: 'match_details', methods: ['GET'])]
     public function matchDetails(int $id): JsonResponse
     {

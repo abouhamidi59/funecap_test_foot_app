@@ -2,9 +2,7 @@
 
 namespace App\Service;
 
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -13,18 +11,14 @@ class ApiFootballService
     private HttpClientInterface $client;
     private string $apiKey;
 
-    public function __construct(HttpClientInterface $client)
+    public function __construct(HttpClientInterface $client, $apiKey)
     {
         $this->client = $client;
-        $this->apiKey = 'cdc2605634msha032a391112c79fp1fadadjsnf2600456e929';
+        $this->apiKey = $apiKey;
     }
 
     /**
-     * @throws RedirectionExceptionInterface
-     * @throws ClientExceptionInterface
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws \Exception
+     * @throws \Exception|TransportExceptionInterface
      */
     public function fetchFromApi(string $endpoint, array $params = [])
     {
@@ -36,12 +30,11 @@ class ApiFootballService
             'query' => $params,
         ]);
 
-        if ($response->getStatusCode() !== 200) {
+        if ($response->getStatusCode() != Response::HTTP_OK) {
             throw new \Exception('Une erreur est survenue lors de la requête à l\'API : ' . $response->getContent(false));
         }
 
         return json_decode($response->getContent(), true);
-
     }
 
     /**

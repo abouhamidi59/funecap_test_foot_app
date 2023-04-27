@@ -1,9 +1,14 @@
-<div class="list-group">
-    {% for league in leagues %}
-        <a href="#" class="list-group-item list-group-item-action"
-           data-action="match#loadMatches"
-           data-league-id="{{ league.league.id }}">
-                {{ league.league.name }}
-        </a>
-    {% endfor %}
+<div class="container-fluid">
+    <div class="col">
+        <h1>Leagues</h1>
+    </div>
+    <div class="list-group">
+            {% for league in leagues %}
+                    <a href="#" class="list-group-item list-group-item-action"
+                       data-action="match#loadMatches"
+                       data-league-id="{{ league.league.id }}">
+                            {{ league.league.name }}
+                    </a>
+            {% endfor %}
+    </div>
 </div>
